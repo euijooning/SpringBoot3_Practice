@@ -27,24 +27,22 @@ public class TokenProvider {
         return makeToken(new Date(now.getTime() + expiredAt.toMillis()), user);
     }
 
+
     // 1. JWT 토큰 생성 메서드
     private String makeToken(Date expiry, User user) {
-
         Date now = new Date();
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE) // 헤더 typ : JWT
-                // 내용 iss : 이메일, properties 파일에서 설정한 값.
-                .setIssuer(jwtProperties.getIssuer())
+                .setIssuer(jwtProperties.getIssuer()) // 내용 iss : 이메일, properties 파일에서 설정한 값.
                 .setIssuedAt(now) // 내용 iat : 현재 시간
                 .setExpiration(expiry) // 내용 exp : expiry 멤버 변숫값
                 .setSubject(user.getEmail()) // 내용 sub : 유저 이메일
                 .claim("id", user.getId()) // 클레임 id : 유저 ID
                 // 서명 : 비밀값과 함께 해시값을 HS256 방식으로 암호화
-                .signWith(SignatureAlgorithm.ES256, jwtProperties.getSecretKey())
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
-
 
 
     //2. Jwt 토큰 유효성 검증 메서드
@@ -62,13 +60,12 @@ public class TokenProvider {
     //3. 토큰 기반으로 인증 정보를 가져오는 메서드
     public Authentication getAuthentication(String token) {
         Claims claims = getClaims(token);
+        Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
 
-        Set<SimpleGrantedAuthority> authorities
-                = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
-
-        return new UsernamePasswordAuthenticationToken(new org.springframework.security.core.userdetails.User
-                (claims.getSubject(), "", authorities), token, authorities);
+        return new UsernamePasswordAuthenticationToken(new org.springframework.security.core.userdetails.User(claims.getSubject
+                (), "", authorities), token, authorities);
     }
+
 
     // 유저 아이디 가져오기
     public Long getUserId(String token) {
@@ -79,7 +76,8 @@ public class TokenProvider {
 
     // 4. 토큰 기반으로 유저 ID를 가져오는 메서드
     private Claims getClaims(String token) {
-        return Jwts.parser() // 클레임 조회
+        // 클레임 조회
+        return Jwts.parser()
                 .setSigningKey(jwtProperties.getSecretKey())
                 .parseClaimsJws(token)
                 .getBody();
