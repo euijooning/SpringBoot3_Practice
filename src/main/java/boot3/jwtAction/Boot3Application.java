@@ -1,4 +1,4 @@
-package boot3;
+package boot3.jwtAction;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
