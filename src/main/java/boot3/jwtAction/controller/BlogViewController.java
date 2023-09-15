@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -42,5 +43,20 @@ public class BlogViewController {
         model.addAttribute("article", new ArticleViewResponse(article));
 
         return "article"; // "article" 뷰를 반환
+    }
+
+    @GetMapping("/new-article")
+    public String newArticle(@RequestParam(required = false) Long id, Model model) {
+        if (id == null) {
+            // 'id' 파라미터가 null인 경우, 새로운 블로그 글 작성을 위한 빈 ArticleViewResponse 객체를 모델에 추가.
+            model.addAttribute("article", new ArticleViewResponse());
+        } else {
+            // 'id' 파라미터가 존재하는 경우, 해당 ID에 해당하는 블로그 글을 조회하여 모델에 추가.
+            Article article = blogService.findById(id);
+            model.addAttribute("article", new ArticleViewResponse(article));
+        }
+
+        // 'newArticle' 뷰를 반환.
+        return "newArticle";
     }
 }
