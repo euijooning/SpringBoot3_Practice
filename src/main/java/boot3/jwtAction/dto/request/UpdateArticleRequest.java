@@ -1,4 +1,4 @@
-package boot3.jwtAction.dto;
+package boot3.jwtAction.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,8 @@
 package boot3.jwtAction.controller;
 
 import boot3.jwtAction.domain.Article;
-import boot3.jwtAction.dto.ArticleListViewResponse;
-import boot3.jwtAction.dto.ArticleViewResponse;
+import boot3.jwtAction.dto.response.ArticleListViewResponse;
+import boot3.jwtAction.dto.response.ArticleViewResponse;
 import boot3.jwtAction.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

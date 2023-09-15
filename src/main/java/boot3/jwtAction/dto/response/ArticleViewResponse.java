@@ -1,4 +1,4 @@
-package boot3.jwtAction.dto;
+package boot3.jwtAction.dto.response;
 
 import boot3.jwtAction.domain.Article;
 import lombok.Getter;

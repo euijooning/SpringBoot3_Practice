@@ -1,8 +1,8 @@
 package boot3.jwtAction.controller;
 
 import boot3.jwtAction.domain.Article;
-import boot3.jwtAction.dto.AddArticleRequest;
-import boot3.jwtAction.dto.UpdateArticleRequest;
+import boot3.jwtAction.dto.request.AddArticleRequest;
+import boot3.jwtAction.dto.request.UpdateArticleRequest;
 import boot3.jwtAction.repository.BlogRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

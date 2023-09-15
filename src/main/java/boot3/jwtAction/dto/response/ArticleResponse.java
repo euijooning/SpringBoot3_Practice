@@ -1,17 +1,15 @@
-package boot3.jwtAction.dto;
+package boot3.jwtAction.dto.response;
 
 import boot3.jwtAction.domain.Article;
 import lombok.Getter;
 
 @Getter
-public class ArticleListViewResponse {
+public class ArticleResponse {
 
-    private final Long id;
     private final String title;
     private final String content;
 
-    public ArticleListViewResponse(Article article) {
-        this.id = article.getId();
+    public ArticleResponse(Article article) {
         this.title = article.getTitle();
         this.content = article.getContent();
     }
