@@ -1,4 +1,4 @@
-package boot3.jwtAction.config;
+//package boot3.jwtAction.config;
 
 //// 시큐리티 설정하기
 //@RequiredArgsConstructor
