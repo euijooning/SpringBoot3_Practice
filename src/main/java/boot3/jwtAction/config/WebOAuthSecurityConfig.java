@@ -2,6 +2,7 @@ package boot3.jwtAction.config;
 
 import boot3.jwtAction.config.jwt.TokenProvider;
 import boot3.jwtAction.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import boot3.jwtAction.config.oauth.OAuth2SuccessHandler;
 import boot3.jwtAction.config.oauth.OAuth2UserCustomService;
 import boot3.jwtAction.repository.RefreshTokenRepository;
 import boot3.jwtAction.service.UserService;
