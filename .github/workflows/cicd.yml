@@ -32,16 +32,6 @@ jobs:
       - name: Set artifact
         run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
 
-      - name: Setup MySQL
-        uses: samin/mysql-action@v1
-        with:
-          host: 'localhost'  # MySQL 호스트
-          port: 3306         # MySQL 포트 (기본값)
-          username: 'boot3'
-          password: '20230916'
-          database: 'boot3'
-          character_set_server: 'utf8'
-
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v20
         with:
@@ -49,6 +39,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: Boot3
           environment_name: Boot3-env
-          version_label: github-action-${{ steps.current-time.outputs.formattedTime }}
+          version_label: github-action-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
-          deployment_package: ./build/libs/${{ env.artifact }}
+          deployment_package: ./build/libs/${{env.artifact}}
