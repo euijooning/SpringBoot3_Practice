@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password") // OAuth 쓰면서 nullable = false 속성 삭제
     private String password;
 
 

@@ -46,10 +46,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-//tasks.named('test') {
-//	useJUnitPlatform()
-//}
-
 test.onlyIf {
 	!project.hasProperty('test')
 }
@@ -57,7 +53,3 @@ test.onlyIf {
 jar {
 	enabled = false
 }
-
-//test {
-//	useJUnitPlatform()
-//}
