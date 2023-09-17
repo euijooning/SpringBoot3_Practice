@@ -50,10 +50,14 @@ dependencies {
 //	useJUnitPlatform()
 //}
 
-test.onlyIf {
-	!project.hasProperty('test')
+//test.onlyIf {
+//	!project.hasProperty('test')
+//}
+
+jar {
+	enabled = false
 }
 
-//jar {
-//	enabled = false
-//}
+test {
+	useJUnitPlatform()
+}
