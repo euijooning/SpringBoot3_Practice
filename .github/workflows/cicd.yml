@@ -1,44 +1,44 @@
-name: CI/CD
+name: CI/CD  # 이 workflow 의 이름
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]  # main 브랜치로 푸시되었을 때만 실행
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Ubuntu 환경에서 실행
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3  # GitHub 리포지토리를 체크아웃
 
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3  # Java를 설정합니다.
         with:
-          distribution: 'corretto'
-          java-version: '17'
+          distribution: 'corretto'  # Amazon Corretto를 사용
+          java-version: '17'  # Java 17을 설치
 
-      - name: Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew  # gradlew 스크립트에 실행 권한 부여
         run: chmod +x gradlew
 
-      - name: Build with Gradle
+      - name: Build with Gradle  # Gradle을 사용하여 빌드
         run: ./gradlew clean build
 
-      - name: Get current time
+      - name: Get current time  # 현재 시간을 가져옵니다.
         uses: josStorer/get-current-time@v2.0.2
         id: current-time
         with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcOffset: "+09:00"
+          format: YYYY-MM-DDTHH-mm-ss  # 시간 형식 지정
+          utcOffset: "+09:00"  # UTC 오프셋 설정 (한국 시간: +09:00)
 
-      - name: Set artifact
+      - name: Set artifact  # 빌드 아티팩트를 환경 변수에 설정
         run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
 
-      - name: Beanstalk Deploy
+      - name: Beanstalk Deploy  # AWS Elastic Beanstalk로 배포
         uses: einaregilsson/beanstalk-deploy@v20
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: Boot3
-          environment_name: Boot3-env
-          version_label: github-action-${{steps.current-time.outputs.formattedTime}}
-          region: ap-northeast-2
-          deployment_package: ./build/libs/${{env.artifact}}
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}  # AWS 액세스 키 ID
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  # AWS 시크릿 액세스 키
+          application_name: Boot3  # Elastic Beanstalk 애플리케이션 이름
+          environment_name: Boot3-env  # Elastic Beanstalk 환경 이름
+          version_label: github-action-${{steps.current-time.outputs.formattedTime}}  # 배포 버전 레이블 설정
+          region: ap-northeast-2  # AWS 리전 설정 (아시아 태평양 - 서울)
+          deployment_package: ./build/libs/${{env.artifact}}  # 배포 패키지 경로 지정
